@@ -1,0 +1,2 @@
+export const ALLOWED_ATTEMPTS = 6;
+export const LETTERS_ARRAY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
