@@ -1,19 +1,19 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { LETTERS_ARRAY, ALLOWED_ATTEMPTS } from "../constants";
-import { Color, KeyColors, Letter, Size, State, Turn } from "../types";
-import { getHints, getToday } from "../utils";
+import { Size, State } from "../types";
+import { getToday } from "../utils";
 
 import dailyWords from "../data/daily-words.json";
 import validWords from "../data/valid-words.json";
 
 type Context = {
+  word: string;
   size: Size;
   guess: string;
-  turns: Turn[];
+  turns: string[];
   state: State;
   jiggle: boolean;
-  keyColors: KeyColors;
 };
 
 type Props = {
@@ -25,6 +25,10 @@ const getTodayWord = () => {
   return dailyWords[today];
 };
 
+const DEFAULT_STATE = "PENDING";
+const DEFAULT_GUESS = "";
+const DEFAULT_TURNS: string[] = [];
+
 export const GameContext = createContext({} as Context);
 
 export const GameProvider = ({ children }: Props) => {
@@ -32,51 +36,11 @@ export const GameProvider = ({ children }: Props) => {
 
   const [word] = useState(getTodayWord());
   const [size] = useState<Size>(5);
-  const [guess, setGuess] = useState("");
-  const [turns, setTurns] = useState<Turn[]>([]);
-  const [state, setState] = useState<State>("PENDING");
+  const [guess, setGuess] = useState(DEFAULT_GUESS);
+  const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
+  const [state, setState] = useState<State>(DEFAULT_STATE);
   const [jiggle, setJiggle] = useState(false);
-  const [keyColors, setKeyColors] = useState<KeyColors>({});
-
-  const updateKeyColorsAfterGuess = useCallback(
-    (hints: Color[]) => {
-      setKeyColors((prev) => {
-        const copy = { ...prev };
-
-        for (let i = 0; i < size; i++) {
-          const letter = guess.charAt(i) as Letter;
-          const color = hints[i];
-
-          if (copy[letter] !== "GREEN" && copy[letter] !== "GRAY") {
-            copy[letter] = color;
-          }
-        }
-
-        return copy;
-      });
-    },
-    [size, guess]
-  );
-
-  const updateTurnsAndStateAfterGuess = useCallback(
-    (hints: Color[]) => {
-      setTurns((prev) => {
-        const hasWon = hints.every((v) => v === "GREEN");
-        const hasLost = !hasWon && prev.length === ALLOWED_ATTEMPTS;
-
-        if (hasWon) {
-          setState("WIN");
-        }
-
-        if (hasLost) {
-          setState("LOSE");
-        }
-
-        return prev.concat({ guess, hints });
-      });
-    },
-    [guess]
-  );
+  const [restored, setRestored] = useState(false);
 
   const appendLetter = useCallback(
     (letter: string) => {
@@ -92,10 +56,17 @@ export const GameProvider = ({ children }: Props) => {
   const submitGuess = useCallback(() => {
     if (guess.length === size) {
       if (validWords.includes(guess)) {
-        const hints = getHints(size, word, guess);
-        updateKeyColorsAfterGuess(hints);
-        updateTurnsAndStateAfterGuess(hints);
         setGuess("");
+
+        if (guess === word) {
+          setState("WIN");
+        }
+
+        if (turns.length === ALLOWED_ATTEMPTS - 1) {
+          setState("LOSE");
+        }
+
+        setTurns((prev) => prev.concat(guess));
       } else {
         setJiggle(true);
         toast({
@@ -106,14 +77,7 @@ export const GameProvider = ({ children }: Props) => {
         });
       }
     }
-  }, [
-    size,
-    word,
-    guess,
-    toast,
-    updateKeyColorsAfterGuess,
-    updateTurnsAndStateAfterGuess,
-  ]);
+  }, [size, word, turns, guess, toast]);
 
   const onKeyPress = useCallback(
     (e: KeyboardEvent) => {
@@ -151,28 +115,6 @@ export const GameProvider = ({ children }: Props) => {
     [state, deleteLetter]
   );
 
-  // cache
-  useEffect(() => {
-    const data = JSON.stringify({ word, guess, turns, state, keyColors });
-    localStorage.setItem("cache", data);
-  }, [word, guess, turns, state, keyColors]);
-
-  // restore
-  useEffect(() => {
-    const cache = localStorage.getItem("cache");
-
-    if (cache) {
-      const data = JSON.parse(cache);
-
-      if (data.word === word) {
-        setGuess(data.guess);
-        setTurns(data.turns);
-        setState(data.state);
-        setKeyColors(data.keyColors);
-      }
-    }
-  }, [word]);
-
   // useEffect(() => {
   //   setGuess("");
   //   setTurns([]);
@@ -188,6 +130,31 @@ export const GameProvider = ({ children }: Props) => {
     }
   }, [jiggle]);
 
+  // restore
+  useEffect(() => {
+    const cache = localStorage.getItem("cache");
+
+    if (cache) {
+      const data = JSON.parse(cache);
+
+      if (data.word === word) {
+        setGuess(data.guess);
+        setTurns(data.turns);
+        setState(data.state);
+      }
+    }
+
+    setRestored(true);
+  }, [word]);
+
+  // cache
+  useEffect(() => {
+    if (restored) {
+      const data = JSON.stringify({ word, guess, state, turns });
+      localStorage.setItem("cache", data);
+    }
+  }, [word, guess, state, turns, restored]);
+
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("keypress", onKeyPress);
@@ -199,9 +166,7 @@ export const GameProvider = ({ children }: Props) => {
   }, [onKeyDown, onKeyPress]);
 
   return (
-    <GameContext.Provider
-      value={{ size, guess, turns, state, jiggle, keyColors }}
-    >
+    <GameContext.Provider value={{ word, size, guess, turns, state, jiggle }}>
       {children}
     </GameContext.Provider>
   );

@@ -1,9 +1,48 @@
-import { Flex, Icon, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { FaChartBar, FaCog, FaRegQuestionCircle } from "react-icons/fa";
+
+import { ModalName } from "../../types";
+import { HeaderIcon } from "./HeaderIcon";
 
 import FoodleLogo from "../../foodle-logo.png";
 
-export const Header = () => {
+type Props = {
+  handleOpenModal: (modal: ModalName) => void;
+};
+
+export const Header = ({ handleOpenModal }: Props) => {
+  const LEFT = (
+    <Flex margin="20px" gap="20px">
+      <HeaderIcon
+        icon={<FaRegQuestionCircle />}
+        ariaLabel="about"
+        onClick={() => handleOpenModal("ABOUT")}
+      />
+      <HeaderIcon
+        icon={<Flex width="20px" />}
+        ariaLabel="dummy"
+        tabIndex={-1}
+      />
+    </Flex>
+  );
+
+  const LOGO = <Image src={FoodleLogo} height="60px" />;
+
+  const RIGHT = (
+    <Flex margin="20px" gap="20px">
+      <HeaderIcon
+        icon={<FaChartBar />}
+        ariaLabel="stats"
+        onClick={() => handleOpenModal("STATS")}
+      />
+      <HeaderIcon
+        icon={<FaCog />}
+        ariaLabel="settings"
+        onClick={() => handleOpenModal("SETTINGS")}
+      />
+    </Flex>
+  );
+
   return (
     <Flex
       width="100%"
@@ -16,19 +55,9 @@ export const Header = () => {
       position="fixed"
       top="0"
     >
-      <Flex margin="20px" gap="20px">
-        <Icon color="gray.400" fontSize="20px" as={FaRegQuestionCircle} />
-        <Icon
-          color="gray.400"
-          fontSize="20px"
-          as={() => <Flex width="20px" />}
-        />
-      </Flex>
-      <Image src={FoodleLogo} height="60px" />
-      <Flex margin="20px" gap="20px">
-        <Icon color="gray.400" fontSize="20px" as={FaChartBar} />
-        <Icon color="gray.400" fontSize="20px" as={FaCog} />
-      </Flex>
+      {LEFT}
+      {LOGO}
+      {RIGHT}
     </Flex>
   );
 };

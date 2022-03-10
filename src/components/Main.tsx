@@ -11,14 +11,13 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useGame } from "../hooks/useGame";
+import { ModalName } from "../types";
 import { Game } from "./Game/Game";
 import { Header } from "./Header/Header";
 import { Keyboard } from "./Keyboard/Keyboard";
 import { AboutModal } from "./Modals/AboutModal";
 import { SettingsModal } from "./Modals/SettingsModal";
 import { StatsModal } from "./Modals/StatsModal";
-
-type ModalName = "STATS" | "ABOUT" | "SETTINGS";
 
 export const Main = () => {
   const { state } = useGame();
@@ -66,7 +65,7 @@ export const Main = () => {
           <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
-      <Header />
+      <Header handleOpenModal={handleOpenModal} />
       <Grid
         gap="20px"
         justifyContent="center"
