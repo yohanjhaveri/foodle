@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGame } from "../../context/GameContext";
+import { useGlobal } from "../../context";
 import { Flex, Image } from "@chakra-ui/react";
 import { FaChartBar, FaRegQuestionCircle } from "react-icons/fa";
 import { GameModal } from "../Modals/GameModal";
@@ -8,7 +8,7 @@ import { Icon } from "./Icon";
 import FoodleLogo from "../../images/foodle-logo.png";
 
 export const Header = () => {
-  const { state, modal, setModal } = useGame();
+  const { state, modal, setModal } = useGlobal();
 
   const LEFT = (
     <Icon

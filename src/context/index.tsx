@@ -11,7 +11,7 @@ import { getTodayWord } from "../utils";
 import { validWordSet } from "../constants";
 import { ModalName, State } from "../types";
 
-type Context = {
+type ContextData = {
   word: string;
   guess: string;
   turns: string[];
@@ -29,9 +29,9 @@ const DEFAULT_STATE = "PENDING";
 const DEFAULT_GUESS = "";
 const DEFAULT_TURNS: string[] = [];
 
-export const GameContext = createContext({} as Context);
+export const Context = createContext({} as ContextData);
 
-export const GameProvider = ({ children }: Props) => {
+export const Provider = ({ children }: Props) => {
   const toast = useToast();
   const word = getTodayWord();
 
@@ -156,12 +156,12 @@ export const GameProvider = ({ children }: Props) => {
   }, [onKeyDown, onKeyPress]);
 
   return (
-    <GameContext.Provider
+    <Context.Provider
       value={{ word, guess, turns, state, jiggle, modal, setModal }}
     >
       {children}
-    </GameContext.Provider>
+    </Context.Provider>
   );
 };
 
-export const useGame = () => useContext(GameContext);
+export const useGlobal = () => useContext(Context);

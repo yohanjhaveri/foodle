@@ -1,5 +1,5 @@
 import { ChakraProvider, DarkMode, extendTheme } from "@chakra-ui/react";
-import { GameProvider } from "./context/GameContext";
+import { Provider } from "./context";
 import { Main } from "./components/Main";
 
 const theme = extendTheme({
@@ -27,10 +27,10 @@ const theme = extendTheme({
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <GameProvider>
-      <DarkMode>
+    <DarkMode>
+      <Provider>
         <Main />
-      </DarkMode>
-    </GameProvider>
+      </Provider>
+    </DarkMode>
   </ChakraProvider>
 );

@@ -1,11 +1,11 @@
 import { Flex } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { useGame } from "../../context/GameContext";
+import { useGlobal } from "../../context";
 import { getKeyColors } from "../../utils";
 import { Key } from "./Key";
 
 export const Keyboard = () => {
-  const { word, turns } = useGame();
+  const { word, turns } = useGlobal();
 
   const keyColors = useMemo(() => getKeyColors(word, turns), [word, turns]);
 
