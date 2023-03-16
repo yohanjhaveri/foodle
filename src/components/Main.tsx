@@ -10,7 +10,7 @@ export const Main = () => {
       <Flex
         justify="stretch"
         align="stretch"
-        height="calc(100vh - 240px)"
+        height={{ base: "calc(100vh - 320px)", md: "calc(100vh - 50px)" }}
         flexDirection="column"
       >
         <Game />

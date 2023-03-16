@@ -21,8 +21,8 @@ export const LetterBlock = ({ letter, color }: Props) => {
     <Flex
       justify="center"
       align="center"
-      width={{ md: sideLength }}
-      height={{ md: sideLength }}
+      width={{ base: "56px", md: sideLength }}
+      height={{ base: "56px", md: sideLength }}
       fontSize={fontSize}
       fontWeight="bold"
       color="white"

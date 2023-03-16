@@ -25,3 +25,5 @@ yarn-error.log*
 
 /src/data/valid-words.json
 /src/data/daily-words.json
+
+.firebase/*

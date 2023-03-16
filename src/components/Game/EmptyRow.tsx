@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useGame } from "../../hooks/useGame";
 import { generateIndexArray } from "../../utils";
 import { LetterBlock } from "./LetterBlock";
@@ -7,10 +7,10 @@ export const EmptyRow = () => {
   const { size } = useGame();
 
   return (
-    <Grid gap="5px" templateColumns="repeat(5, 1fr)">
+    <Flex gap="6px" justify="center">
       {generateIndexArray(size).map((i) => (
         <LetterBlock key={i} />
       ))}
-    </Grid>
+    </Flex>
   );
 };

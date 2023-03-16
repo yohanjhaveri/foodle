@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { useGame } from "../../hooks/useGame";
 import { generateIndexArray, getHints } from "../../utils";
@@ -14,10 +14,10 @@ export const FilledRow = ({ turn }: Props) => {
   const hints = useMemo(() => getHints(size, word, turn), [size, word, turn]);
 
   return (
-    <Grid gap="6px" templateColumns="repeat(5, 1fr)">
+    <Flex gap="6px" justify="center">
       {generateIndexArray(size).map((i) => (
         <LetterBlock key={i} color={hints[i]} letter={turn.charAt(i)} />
       ))}
-    </Grid>
+    </Flex>
   );
 };
