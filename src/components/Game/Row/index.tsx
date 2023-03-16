@@ -12,12 +12,17 @@ export type RowProps = {
 export const Row = ({ index }: RowProps) => {
   const { type, colors, letters, jiggle } = useRow(index);
 
+  const shouldAnimate = type === "active" && jiggle;
+
+  const animation = shouldAnimate ? `${jiggleAnimation} linear` : "";
+  const animationDuration = shouldAnimate ? "300ms" : "";
+
   return (
     <Flex
       gap="6px"
       justify="center"
-      animation={type === "active" && jiggle ? `${jiggleAnimation} linear` : ""}
-      style={{ animationDuration: type === "active" && jiggle ? "300ms" : "" }}
+      animation={animation}
+      style={{ animationDuration }}
     >
       {generateIndexArray(WORD_SIZE).map((i) => (
         <Letter key={i} color={colors[i]} letter={letters[i]} />

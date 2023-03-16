@@ -1,4 +1,3 @@
-import { WORD_SIZE } from "../../../constants";
 import { getHints } from "../../../utils";
 
 export const getType = (index: number, turns: string[]) => {
@@ -11,6 +10,14 @@ export const getType = (index: number, turns: string[]) => {
   }
 
   return "empty";
+};
+
+export const getColors = (index: number, word: string, turns: string[]) => {
+  if (index < turns.length) {
+    return getHints(word, turns[index]);
+  }
+
+  return [];
 };
 
 export const getLetters = (
@@ -28,12 +35,4 @@ export const getLetters = (
   }
 
   return turns[index];
-};
-
-export const getColors = (index: number, word: string, turns: string[]) => {
-  if (index < turns.length) {
-    return getHints(word, turns[index]);
-  }
-
-  return [];
 };

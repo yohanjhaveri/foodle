@@ -24,7 +24,7 @@ export const getTodayWord = () => {
   return dailyWordList[todayHash];
 };
 
-export const getTheme = (color: Color) => {
+export const getColorValue = (color: Color) => {
   return {
     GREEN: "green.600",
     YELLOW: "yellow.500",

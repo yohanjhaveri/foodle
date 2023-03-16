@@ -7,14 +7,8 @@ export const Game = () => {
   const rows = generateIndexArray(ALLOWED_ATTEMPTS);
 
   return (
-    <Flex h="100%" justify="center" align="center">
-      <Grid
-        px="20px"
-        py="15px"
-        gap="6px"
-        templateRows="repeat(6, 1fr)"
-        justifyContent={{ base: "stretch", md: "center" }}
-      >
+    <Flex h="100%" justify="center">
+      <Grid px="20px" py="15px" gap="6px">
         {rows.map((i) => (
           <Row key={i} index={i} />
         ))}
