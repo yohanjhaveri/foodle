@@ -127,13 +127,6 @@ export const GameProvider = ({ children }: Props) => {
     [state, deleteLetter]
   );
 
-  // useEffect(() => {
-  //   setGuess("");
-  //   setTurns([]);
-  //   setState("PENDING");
-  //   setKeyColors({});
-  // }, [size]);
-
   useEffect(() => {
     if (jiggle) {
       setTimeout(() => {

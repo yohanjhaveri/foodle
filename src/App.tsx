@@ -27,6 +27,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     color: white;
     background: #1A202C;
+    height: 100%;
   }
 
   * {
@@ -37,5 +38,6 @@ const GlobalStyles = createGlobalStyle`
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     box-sizing: border-box;
+    background: #1A202C
   }
 `;

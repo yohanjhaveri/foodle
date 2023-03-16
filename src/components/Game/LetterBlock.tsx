@@ -1,6 +1,4 @@
 import { Flex } from "@chakra-ui/react";
-import { useGame } from "../../hooks/useGame";
-import { useResponsive } from "../../hooks/useResponsive";
 import { getTheme } from "../../utils";
 import { Color } from "../../types";
 
@@ -10,20 +8,13 @@ type Props = {
 };
 
 export const LetterBlock = ({ letter, color }: Props) => {
-  const { size } = useGame();
-  const { width, height } = useResponsive();
-
-  const dimension = Math.min(width, height);
-  const sideLength = Math.min(dimension / (size * 1.4), 66) + "px";
-  const fontSize = Math.min(dimension / (size * 2.5), 32) + "px";
-
   return (
     <Flex
       justify="center"
       align="center"
-      width={{ base: "56px", md: sideLength }}
-      height={{ base: "56px", md: sideLength }}
-      fontSize={fontSize}
+      width={{ base: "56px", md: "72px" }}
+      height={{ base: "56px", md: "72px" }}
+      fontSize={{ base: "32px", md: "36px" }}
       fontWeight="bold"
       color="white"
       borderWidth="2px"

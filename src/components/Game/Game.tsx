@@ -21,8 +21,6 @@ export const Game = () => {
       <Grid
         gap="6px"
         templateRows="repeat(6, 1fr)"
-        flexGrow="1"
-        flexShrink="2"
         px="20px"
         py="15px"
         justifyContent={{ base: "stretch", md: "center" }}

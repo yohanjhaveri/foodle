@@ -5,12 +5,12 @@ import { Keyboard } from "./Keyboard/Keyboard";
 
 export const Main = () => {
   return (
-    <Box w="100%">
+    <Box w="100%" h="100%">
       <Header />
       <Flex
         justify="stretch"
         align="stretch"
-        height={{ base: "calc(100vh - 320px)", md: "calc(100vh - 50px)" }}
+        height="calc(100% - 60px)"
         flexDirection="column"
       >
         <Game />
