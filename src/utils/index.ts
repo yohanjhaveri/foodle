@@ -1,8 +1,8 @@
-import { dailyWordList, WORD_SIZE } from "../constants";
+import { DAILY_WORD_LIST, WORD, WORD_SIZE } from "../constants";
 import { Color, KeyColors } from "../types";
 
 const getToday = () => {
-  return new Date().toISOString().split("T")[0];
+  return new Date().toLocaleDateString().split("T")[0];
 };
 
 const getTodayHash = () => {
@@ -15,12 +15,12 @@ const getTodayHash = () => {
     hash |= 0;
   }
 
-  return Math.abs(hash) % dailyWordList.length;
+  return Math.abs(hash) % DAILY_WORD_LIST.length;
 };
 
 export const getTodayWord = () => {
   const todayHash = getTodayHash();
-  return dailyWordList[todayHash];
+  return DAILY_WORD_LIST[todayHash];
 };
 
 export const getColorValue = (color: Color) => {
@@ -35,8 +35,9 @@ export const generateIterator = (size: number) => {
   return Array.from(Array(size).keys());
 };
 
-export const getHints = (actual: string, guess: string) => {
+export const getHints = (guess: string) => {
   const size = WORD_SIZE;
+  const actual = WORD;
 
   const colors: Color[] = Array(size).fill("GRAY");
   const indexes: number[] = [];
@@ -61,13 +62,13 @@ export const getHints = (actual: string, guess: string) => {
   return colors;
 };
 
-export const getKeyColors = (actual: string, turns: string[]) => {
+export const getKeyColors = (turns: string[]) => {
   const size = WORD_SIZE;
 
   const colors: KeyColors = {};
 
   for (const turn of turns) {
-    const hints = getHints(actual, turn);
+    const hints = getHints(turn);
 
     for (let i = 0; i < size; i++) {
       const letter = turn.charAt(i);

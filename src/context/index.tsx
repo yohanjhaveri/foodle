@@ -6,13 +6,16 @@ import {
   useState,
 } from "react";
 import { useToast } from "@chakra-ui/react";
-import { LETTERS_ARRAY, ALLOWED_ATTEMPTS, WORD_SIZE } from "../constants";
-import { getTodayWord } from "../utils";
-import { validWordSet } from "../constants";
+import {
+  VALID_WORD_SET,
+  LETTERS_ARRAY,
+  ALLOWED_ATTEMPTS,
+  WORD_SIZE,
+  WORD,
+} from "../constants";
 import { ModalName, State } from "../types";
 
 type ContextData = {
-  word: string;
   guess: string;
   turns: string[];
   state: State;
@@ -33,7 +36,6 @@ export const Context = createContext({} as ContextData);
 
 export const Provider = ({ children }: Props) => {
   const toast = useToast();
-  const word = getTodayWord();
 
   const [modal, setModal] = useState<ModalName | "">("");
   const [guess, setGuess] = useState(DEFAULT_GUESS);
@@ -52,10 +54,10 @@ export const Provider = ({ children }: Props) => {
 
   const submitGuess = useCallback(() => {
     if (guess.length === WORD_SIZE) {
-      if (validWordSet.has(guess)) {
+      if (VALID_WORD_SET.has(guess)) {
         setGuess("");
 
-        if (guess === word) {
+        if (guess === WORD) {
           setState("WIN");
         }
 
@@ -74,7 +76,7 @@ export const Provider = ({ children }: Props) => {
         });
       }
     }
-  }, [word, turns, guess, toast]);
+  }, [turns, guess, toast]);
 
   const onKeyPress = useCallback(
     (e: KeyboardEvent) => {
@@ -127,7 +129,7 @@ export const Provider = ({ children }: Props) => {
     if (cache) {
       const data = JSON.parse(cache);
 
-      if (data.word === word) {
+      if (data.word === WORD) {
         setGuess(data.guess);
         setTurns(data.turns);
         setState(data.state);
@@ -135,15 +137,15 @@ export const Provider = ({ children }: Props) => {
     }
 
     setRestored(true);
-  }, [word]);
+  }, []);
 
   // cache
   useEffect(() => {
     if (restored) {
-      const data = JSON.stringify({ word, guess, state, turns });
+      const data = JSON.stringify({ word: WORD, guess, state, turns });
       localStorage.setItem("cache", data);
     }
-  }, [word, guess, state, turns, restored]);
+  }, [guess, state, turns, restored]);
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
@@ -156,9 +158,7 @@ export const Provider = ({ children }: Props) => {
   }, [onKeyDown, onKeyPress]);
 
   return (
-    <Context.Provider
-      value={{ word, guess, turns, state, jiggle, modal, setModal }}
-    >
+    <Context.Provider value={{ guess, turns, state, jiggle, modal, setModal }}>
       {children}
     </Context.Provider>
   );

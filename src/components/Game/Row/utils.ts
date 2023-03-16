@@ -12,9 +12,9 @@ export const getType = (index: number, turns: string[]) => {
   return "empty";
 };
 
-export const getColors = (index: number, word: string, turns: string[]) => {
+export const getColors = (index: number, turns: string[]) => {
   if (index < turns.length) {
-    return getHints(word, turns[index]);
+    return getHints(turns[index]);
   }
 
   return [];
