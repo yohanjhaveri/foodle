@@ -12,8 +12,6 @@ export const Header = () => {
       background="gray.800"
       justify="center"
       align="center"
-      position="fixed"
-      top="0"
     >
       <Image src={FoodleLogo} height="60px" />
     </Flex>

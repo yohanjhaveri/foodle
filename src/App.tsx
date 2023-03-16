@@ -25,7 +25,6 @@ const GlobalStyles = createGlobalStyle`
   html, body, main, #root {
     margin: 0;
     padding: 0;
-    minHeight: 100vh;
     color: white;
     background: #1A202C;
   }
@@ -37,5 +36,7 @@ const GlobalStyles = createGlobalStyle`
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    box-sizing: border-box;
+    overflow: hidden;
   }
 `;

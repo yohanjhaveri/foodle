@@ -21,8 +21,8 @@ export const LetterBlock = ({ letter, color }: Props) => {
     <Flex
       justify="center"
       align="center"
-      width={sideLength}
-      height={sideLength}
+      width={{ md: sideLength }}
+      height={{ md: sideLength }}
       fontSize={fontSize}
       fontWeight="bold"
       color="white"
@@ -30,6 +30,7 @@ export const LetterBlock = ({ letter, color }: Props) => {
       borderStyle="solid"
       borderColor={color ? getTheme(color) : "gray.600"}
       background={color && getTheme(color)}
+      style={{ aspectRatio: "1" }}
     >
       {letter}
     </Flex>

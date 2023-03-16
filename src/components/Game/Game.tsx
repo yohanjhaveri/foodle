@@ -18,10 +18,12 @@ export const Game = () => {
 
   return (
     <Grid
-      gap="8px"
-      templateRows="1fr 1fr 1fr 1fr 1fr 1fr"
-      width="100%"
-      justifyContent="center"
+      gap="6px"
+      templateRows="repeat(6, 1fr)"
+      flex-grow="1"
+      px="20px"
+      py="15px"
+      justifyContent={{ base: "stretch", md: "center" }}
     >
       {FILLED_ROWS}
       {turns.length < ALLOWED_ATTEMPTS && ACTIVE_ROW}

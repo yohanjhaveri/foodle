@@ -31,7 +31,7 @@ export const Keyboard = () => {
   ];
 
   return (
-    <Flex direction="column" align="center" gap="6px">
+    <Flex direction="column" align="center" gap="6px" pb="10px">
       {ROWS.map((ROW, i) => (
         <Flex key={i} gap="5px">
           {ROW.map((key, j) => (

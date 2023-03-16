@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Flex } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import { useGame } from "../../hooks/useGame";
 import { generateIndexArray } from "../../utils";
 import { LetterBlock } from "./LetterBlock";
@@ -8,7 +8,7 @@ export const ActiveRow = () => {
   const { size, guess, jiggle } = useGame();
 
   return (
-    <Row gap="8px" jiggle={jiggle}>
+    <Row gap="6px" templateColumns="repeat(5, 1fr)" jiggle={jiggle}>
       {generateIndexArray(size).map((i) => (
         <LetterBlock key={i} letter={guess.charAt(i)} />
       ))}
@@ -16,7 +16,7 @@ export const ActiveRow = () => {
   );
 };
 
-const Row = styled(Flex)<{ jiggle: boolean }>`
+const Row = styled(Grid)<{ jiggle: boolean }>`
   @keyframes jiggle {
     0% {
       transform: translate(0, 0);
