@@ -11,7 +11,7 @@ export const Main = () => {
         justifyContent="stretch"
         alignItems="flex-end"
         maxHeight="calc(100vh - 61px)"
-        templateRows={{ base: "1fr 202px", md: "none" }}
+        templateRows={{ base: "1fr 172px", md: "none" }}
       >
         <Game />
         <Keyboard />

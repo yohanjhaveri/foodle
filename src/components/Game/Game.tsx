@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Flex, Grid } from "@chakra-ui/react";
 import { useGame } from "../../hooks/useGame";
 import { generateIndexArray } from "../../utils";
 import { ALLOWED_ATTEMPTS } from "../../constants";
@@ -17,17 +17,20 @@ export const Game = () => {
   const ACTIVE_ROW = <ActiveRow />;
 
   return (
-    <Grid
-      gap="6px"
-      templateRows="repeat(6, 1fr)"
-      flex-grow="1"
-      px="20px"
-      py="15px"
-      justifyContent={{ base: "stretch", md: "center" }}
-    >
-      {FILLED_ROWS}
-      {turns.length < ALLOWED_ATTEMPTS && ACTIVE_ROW}
-      {EMPTY_ROWS}
-    </Grid>
+    <Flex>
+      <Grid
+        gap="6px"
+        templateRows="repeat(6, 1fr)"
+        flexGrow="1"
+        px="20px"
+        py="15px"
+        justifyContent={{ base: "stretch", md: "center" }}
+        height="100%"
+      >
+        {FILLED_ROWS}
+        {turns.length < ALLOWED_ATTEMPTS && ACTIVE_ROW}
+        {EMPTY_ROWS}
+      </Grid>
+    </Flex>
   );
 };
