@@ -9,7 +9,7 @@ import { useToast } from "@chakra-ui/react";
 import { LETTERS_ARRAY, ALLOWED_ATTEMPTS, WORD_SIZE } from "../constants";
 import { getTodayWord } from "../utils";
 import { validWordSet } from "../constants";
-import { State } from "../types";
+import { ModalName, State } from "../types";
 
 type Context = {
   word: string;
@@ -17,6 +17,8 @@ type Context = {
   turns: string[];
   state: State;
   jiggle: boolean;
+  modal: ModalName | "";
+  setModal: (modal: ModalName | "") => void;
 };
 
 type Props = {
@@ -33,6 +35,7 @@ export const GameProvider = ({ children }: Props) => {
   const toast = useToast();
   const word = getTodayWord();
 
+  const [modal, setModal] = useState<ModalName | "">("");
   const [guess, setGuess] = useState(DEFAULT_GUESS);
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
   const [state, setState] = useState<State>(DEFAULT_STATE);
@@ -153,7 +156,9 @@ export const GameProvider = ({ children }: Props) => {
   }, [onKeyDown, onKeyPress]);
 
   return (
-    <GameContext.Provider value={{ word, guess, turns, state, jiggle }}>
+    <GameContext.Provider
+      value={{ word, guess, turns, state, jiggle, modal, setModal }}
+    >
       {children}
     </GameContext.Provider>
   );

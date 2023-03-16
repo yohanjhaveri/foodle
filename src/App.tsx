@@ -18,7 +18,7 @@ const theme = extendTheme({
         margin: 0,
         padding: 0,
         height: "100%",
-        color: "gray.900",
+        color: "white",
         background: "gray.800",
       },
     },
