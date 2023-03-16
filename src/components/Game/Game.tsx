@@ -17,15 +17,15 @@ export const Game = () => {
   const ACTIVE_ROW = <ActiveRow />;
 
   return (
-    <Flex>
+    <Flex h="100%" justify="center" align="center">
       <Grid
         gap="6px"
         templateRows="repeat(6, 1fr)"
         flexGrow="1"
+        flexShrink="2"
         px="20px"
         py="15px"
         justifyContent={{ base: "stretch", md: "center" }}
-        height="100%"
       >
         {FILLED_ROWS}
         {turns.length < ALLOWED_ATTEMPTS && ACTIVE_ROW}

@@ -13,7 +13,7 @@ export const Header = () => {
       justify="center"
       align="center"
     >
-      <Image src={FoodleLogo} height="60px" />
+      <Image src={FoodleLogo} height="49px" />
     </Flex>
   );
 };

@@ -7,7 +7,7 @@ export const EmptyRow = () => {
   const { size } = useGame();
 
   return (
-    <Grid gap="6px" templateColumns="repeat(5, 1fr)">
+    <Grid gap="5px" templateColumns="repeat(5, 1fr)">
       {generateIndexArray(size).map((i) => (
         <LetterBlock key={i} />
       ))}
