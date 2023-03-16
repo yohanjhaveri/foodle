@@ -1,13 +1,13 @@
 import { Flex } from "@chakra-ui/react";
-import { getTheme } from "../../utils";
-import { Color } from "../../types";
+import { getTheme } from "../../../utils";
+import { Color } from "../../../types";
 
-type Props = {
+type LetterProps = {
   letter?: string;
   color?: Color;
 };
 
-export const LetterBlock = ({ letter, color }: Props) => {
+export const Letter = ({ letter, color }: LetterProps) => {
   return (
     <Flex
       justify="center"

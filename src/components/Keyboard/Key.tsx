@@ -1,5 +1,4 @@
 import { Flex } from "@chakra-ui/react";
-import { useResponsive } from "../../hooks/useResponsive";
 import { getTheme } from "../../utils";
 import { Color } from "../../types";
 
@@ -12,11 +11,9 @@ type Props = {
 };
 
 export const Key = ({ color, label, value, length, onClick }: Props) => {
-  const { width: deviceWidth } = useResponsive();
-
-  const width = Math.min(deviceWidth / 12, 50) + "px";
-  const fontSize = Math.min(deviceWidth / 24, 24) + "px";
-  const borderRadius = Math.min(deviceWidth / 80, 6) + "px";
+  const width = "min(100vw / 12, 50px)";
+  const fontSize = "min(100vw / 24, 24px)";
+  const borderRadius = "min(100vw / 80, 6px)";
 
   const long = ["Enter", "Back"].includes(label);
 
@@ -30,7 +27,7 @@ export const Key = ({ color, label, value, length, onClick }: Props) => {
         md: long ? "70px" : width,
       }}
       height={{ base: "50px", md: "70px" }}
-      fontSize={["Enter", "Back"].includes(label) ? "16px" : fontSize}
+      fontSize={long ? "16px" : fontSize}
       fontWeight="600"
       color="white"
       background={color ? getTheme(color) : "gray.600"}

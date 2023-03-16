@@ -1,13 +1,12 @@
-import { useToast } from "@chakra-ui/react";
 import { createContext, useCallback, useEffect, useState } from "react";
-import { LETTERS_ARRAY, ALLOWED_ATTEMPTS } from "../constants";
-import { dailyWordList, validWordSet } from "../data";
-import { Size, State } from "../types";
-import { getToday } from "../utils";
+import { useToast } from "@chakra-ui/react";
+import { LETTERS_ARRAY, ALLOWED_ATTEMPTS, WORD_SIZE } from "../constants";
+import { getTodayWord } from "../utils";
+import { validWordSet } from "../data";
+import { State } from "../types";
 
 type Context = {
   word: string;
-  size: Size;
   guess: string;
   turns: string[];
   state: State;
@@ -16,25 +15,6 @@ type Context = {
 
 type Props = {
   children: React.ReactNode;
-};
-
-const getTodayHash = () => {
-  const today = getToday();
-
-  let hash = 0;
-
-  for (let i = 0; i < today.length; i++) {
-    let chr = today.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0;
-  }
-
-  return Math.abs(hash) % dailyWordList.length;
-};
-
-const getTodayWord = () => {
-  const todayHash = getTodayHash();
-  return dailyWordList[todayHash];
 };
 
 const DEFAULT_STATE = "PENDING";
@@ -47,26 +27,22 @@ export const GameProvider = ({ children }: Props) => {
   const toast = useToast();
 
   const [word] = useState(getTodayWord());
-  const [size] = useState<Size>(5);
   const [guess, setGuess] = useState(DEFAULT_GUESS);
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
   const [state, setState] = useState<State>(DEFAULT_STATE);
   const [jiggle, setJiggle] = useState(false);
   const [restored, setRestored] = useState(false);
 
-  const appendLetter = useCallback(
-    (letter: string) => {
-      setGuess((prev) => (prev + letter).substring(0, size));
-    },
-    [size]
-  );
+  const appendLetter = useCallback((letter: string) => {
+    setGuess((prev) => (prev + letter).substring(0, WORD_SIZE));
+  }, []);
 
   const deleteLetter = useCallback(() => {
     setGuess((prev) => prev.substring(0, prev.length - 1));
   }, []);
 
   const submitGuess = useCallback(() => {
-    if (guess.length === size) {
+    if (guess.length === WORD_SIZE) {
       if (validWordSet.has(guess)) {
         setGuess("");
 
@@ -89,7 +65,7 @@ export const GameProvider = ({ children }: Props) => {
         });
       }
     }
-  }, [size, word, turns, guess, toast]);
+  }, [word, turns, guess, toast]);
 
   const onKeyPress = useCallback(
     (e: KeyboardEvent) => {
@@ -171,7 +147,7 @@ export const GameProvider = ({ children }: Props) => {
   }, [onKeyDown, onKeyPress]);
 
   return (
-    <GameContext.Provider value={{ word, size, guess, turns, state, jiggle }}>
+    <GameContext.Provider value={{ word, guess, turns, state, jiggle }}>
       {children}
     </GameContext.Provider>
   );

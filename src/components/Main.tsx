@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { Game } from "./Game/Game";
+import { Game } from "./Game";
 import { Header } from "./Header/Header";
 import { Keyboard } from "./Keyboard/Keyboard";
 

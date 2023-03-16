@@ -5,12 +5,9 @@ import { getKeyColors } from "../../utils";
 import { Key } from "./Key";
 
 export const Keyboard = () => {
-  const { size, word, turns } = useGame();
+  const { word, turns } = useGame();
 
-  const keyColors = useMemo(
-    () => getKeyColors(size, word, turns),
-    [size, word, turns]
-  );
+  const keyColors = useMemo(() => getKeyColors(word, turns), [word, turns]);
 
   const handleKeyPress = (key: string) => {
     document.dispatchEvent(

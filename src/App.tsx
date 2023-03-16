@@ -1,42 +1,36 @@
-import { ChakraProvider, DarkMode } from "@chakra-ui/react";
-
+import { ChakraProvider, DarkMode, extendTheme } from "@chakra-ui/react";
 import { GameProvider } from "./context/GameContext";
-import { ResponsiveProvider } from "./context/ResponsiveContext";
-
 import { Main } from "./components/Main";
-import { createGlobalStyle } from "styled-components";
 
-export const App = () => {
-  return (
-    <ChakraProvider>
-      <GameProvider>
-        <ResponsiveProvider>
-          <GlobalStyles />
-          <DarkMode>
-            <Main />
-          </DarkMode>
-        </ResponsiveProvider>
-      </GameProvider>
-    </ChakraProvider>
-  );
-};
+const theme = extendTheme({
+  styles: {
+    global: {
+      "*": {
+        " -webkit-touch-callout": "none",
+        WebkitUserSelect: "none",
+        KhtmlUserSelect: "none",
+        MozUserSelect: "none",
+        msUserSelect: "none",
+        userSelect: "none",
+        boxSizing: "border-box",
+      },
+      "html, body": {
+        margin: 0,
+        padding: 0,
+        height: "100%",
+        color: "gray.900",
+        background: "gray.800",
+      },
+    },
+  },
+});
 
-const GlobalStyles = createGlobalStyle`
-  html, body, main, #root {
-    margin: 0;
-    padding: 0;
-    color: white;
-    background: #1A202C;
-    height: 100%;
-  }
-
-  * {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-    box-sizing: border-box;
-  }
-`;
+export const App = () => (
+  <ChakraProvider theme={theme}>
+    <GameProvider>
+      <DarkMode>
+        <Main />
+      </DarkMode>
+    </GameProvider>
+  </ChakraProvider>
+);
