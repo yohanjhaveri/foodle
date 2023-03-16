@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useGlobal } from "../../context";
 import { Flex, Image } from "@chakra-ui/react";
 import { FaChartBar, FaRegQuestionCircle } from "react-icons/fa";
@@ -8,7 +7,7 @@ import { Icon } from "./Icon";
 import FoodleLogo from "../../images/foodle-logo.png";
 
 export const Header = () => {
-  const { state, modal, setModal } = useGlobal();
+  const { modal, setModal } = useGlobal();
 
   const LEFT = (
     <Icon
@@ -29,12 +28,6 @@ export const Header = () => {
   );
 
   const MODAL = modal && <GameModal modal={modal} setModal={setModal} />;
-
-  useEffect(() => {
-    if (["WIN", "LOSE"].includes(state)) {
-      setModal("STATS");
-    }
-  }, [state]);
 
   return (
     <Flex

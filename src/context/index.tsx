@@ -3,9 +3,10 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
-import { useToast } from "@chakra-ui/react";
+import { Box, Flex, useToast } from "@chakra-ui/react";
 import {
   VALID_WORD_SET,
   LETTERS_ARRAY,
@@ -13,7 +14,8 @@ import {
   WORD_SIZE,
   WORD,
 } from "../constants";
-import { ModalName, State } from "../types";
+import { ModalName, State, Stats } from "../types";
+import { getToday } from "../utils";
 
 type ContextData = {
   guess: string;
@@ -28,7 +30,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-const DEFAULT_STATE = "PENDING";
 const DEFAULT_GUESS = "";
 const DEFAULT_TURNS: string[] = [];
 
@@ -40,9 +41,21 @@ export const Provider = ({ children }: Props) => {
   const [modal, setModal] = useState<ModalName | "">("");
   const [guess, setGuess] = useState(DEFAULT_GUESS);
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
-  const [state, setState] = useState<State>(DEFAULT_STATE);
   const [jiggle, setJiggle] = useState(false);
-  const [restored, setRestored] = useState(false);
+
+  const state = useMemo(() => {
+    if (turns[turns.length - 1] === WORD) {
+      return "WIN";
+    }
+
+    if (turns.length === ALLOWED_ATTEMPTS) {
+      return "LOSE";
+    }
+
+    return "PENDING";
+  }, [turns]);
+
+  console.log(state);
 
   const appendLetter = useCallback((letter: string) => {
     setGuess((prev) => (prev + letter).substring(0, WORD_SIZE));
@@ -56,15 +69,6 @@ export const Provider = ({ children }: Props) => {
     if (guess.length === WORD_SIZE) {
       if (VALID_WORD_SET.has(guess)) {
         setGuess("");
-
-        if (guess === WORD) {
-          setState("WIN");
-        }
-
-        if (turns.length === ALLOWED_ATTEMPTS - 1) {
-          setState("LOSE");
-        }
-
         setTurns((prev) => prev.concat(guess));
       } else {
         setJiggle(true);
@@ -124,28 +128,84 @@ export const Provider = ({ children }: Props) => {
 
   // restore
   useEffect(() => {
-    const cache = localStorage.getItem("cache");
+    const stats = localStorage.getItem("stats");
 
-    if (cache) {
-      const data = JSON.parse(cache);
+    if (stats) {
+      const data = JSON.parse(stats) as Stats;
+      const today = data.find((stat) => stat.date === getToday());
 
-      if (data.word === WORD) {
-        setGuess(data.guess);
-        setTurns(data.turns);
-        setState(data.state);
+      if (today) {
+        setGuess(today.guess);
+        setTurns(today.turns);
       }
     }
-
-    setRestored(true);
   }, []);
+
+  useEffect(() => {
+    if (state === "WIN") {
+      toast({
+        id: "win-toast",
+        position: "top",
+        render: () => (
+          <Flex justify="center" pb="">
+            <Box
+              px="16px"
+              py="8px"
+              bg="yellow.200"
+              borderRadius="md"
+              fontSize="xl"
+            >
+              🎉 🎉 🎉
+            </Box>
+          </Flex>
+        ),
+        duration: 100000,
+      });
+
+      setTimeout(() => {
+        setModal("STATS");
+      }, 3000);
+    }
+
+    if (state === "LOSE") {
+      toast({
+        id: "lose-toast",
+        position: "top",
+        render: () => (
+          <Flex justify="center" pb="">
+            <Box
+              px="16px"
+              py="8px"
+              color="gray.700"
+              bg="yellow.200"
+              borderRadius="md"
+              fontSize="xl"
+              fontWeight="700"
+            >
+              {WORD}
+            </Box>
+          </Flex>
+        ),
+        duration: 100000,
+      });
+
+      setTimeout(() => {
+        setModal("STATS");
+      }, 3000);
+    }
+
+    if (["WIN", "LOSE"].includes(state)) {
+      setTimeout(() => {
+        setModal("STATS");
+      }, 3000);
+    }
+  }, [state, toast]);
 
   // cache
   useEffect(() => {
-    if (restored) {
-      const data = JSON.stringify({ word: WORD, guess, state, turns });
-      localStorage.setItem("cache", data);
-    }
-  }, [guess, state, turns, restored]);
+    const data = JSON.stringify({ word: WORD, guess, state, turns });
+    localStorage.setItem("cache", data);
+  }, [guess, state, turns]);
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);

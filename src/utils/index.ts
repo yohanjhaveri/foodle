@@ -1,8 +1,8 @@
 import { DAILY_WORD_LIST, WORD, WORD_SIZE } from "../constants";
 import { Color, KeyColors } from "../types";
 
-const getToday = () => {
-  return new Date().toLocaleDateString().split("T")[0];
+export const getToday = () => {
+  return new Date().toLocaleDateString();
 };
 
 const getTodayHash = () => {
