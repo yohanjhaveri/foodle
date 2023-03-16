@@ -1,16 +1,16 @@
-import { Flex } from "@chakra-ui/react";
 import { useGame } from "../../hooks/useGame";
 import { generateIndexArray } from "../../utils";
 import { LetterBlock } from "./LetterBlock";
+import { RowWrapper } from "./RowWrapper";
 
 export const EmptyRow = () => {
   const { size } = useGame();
 
   return (
-    <Flex gap="6px" justify="center">
+    <RowWrapper>
       {generateIndexArray(size).map((i) => (
         <LetterBlock key={i} />
       ))}
-    </Flex>
+    </RowWrapper>
   );
 };
