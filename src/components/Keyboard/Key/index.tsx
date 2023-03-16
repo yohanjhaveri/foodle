@@ -1,8 +1,8 @@
 import { Flex } from "@chakra-ui/react";
-import { getColorValue } from "../../utils";
-import { Color } from "../../types";
+import { getColorValue } from "../../../utils";
+import { Color } from "../../../types";
 
-type Props = {
+type KeyProps = {
   label: string;
   value: string;
   color?: Color;
@@ -10,7 +10,7 @@ type Props = {
   onClick: (letter: string) => void;
 };
 
-export const Key = ({ color, label, value, length, onClick }: Props) => {
+export const Key = ({ color, label, value, onClick }: KeyProps) => {
   const width = "min(100vw / 12, 50px)";
   const fontSize = "min(100vw / 24, 24px)";
   const borderRadius = "min(100vw / 80, 6px)";

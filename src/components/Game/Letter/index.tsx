@@ -11,6 +11,7 @@ export const Letter = ({ color, letter }: LetterProps) => {
   return (
     <Flex
       justify="center"
+      align="center"
       width={{ base: "56px", md: "72px" }}
       height={{ base: "56px", md: "72px" }}
       fontSize={{ base: "32px", md: "36px" }}
