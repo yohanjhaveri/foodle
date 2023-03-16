@@ -1,4 +1,4 @@
-import { useGame } from "../../../hooks/useGame";
+import { useGame } from "../../../context/GameContext";
 import { getColors, getLetters, getType } from "./utils";
 
 export const useRow = (index: number) => {

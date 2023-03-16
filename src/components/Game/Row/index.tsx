@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useRow } from "./state";
-import { generateIndexArray } from "../../../utils";
+import { generateIterator } from "../../../utils";
 import { WORD_SIZE } from "../../../constants";
 import { jiggleAnimation } from "./styles";
 import { Letter } from "../Letter";
@@ -24,7 +24,7 @@ export const Row = ({ index }: RowProps) => {
       animation={animation}
       style={{ animationDuration }}
     >
-      {generateIndexArray(WORD_SIZE).map((i) => (
+      {generateIterator(WORD_SIZE).map((i) => (
         <Letter key={i} color={colors[i]} letter={letters[i]} />
       ))}
     </Flex>

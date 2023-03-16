@@ -1,5 +1,4 @@
-import { WORD_SIZE } from "../constants";
-import { dailyWordList } from "../data";
+import { dailyWordList, WORD_SIZE } from "../constants";
 import { Color, KeyColors } from "../types";
 
 const getToday = () => {
@@ -32,7 +31,7 @@ export const getColorValue = (color: Color) => {
   }[color];
 };
 
-export const generateIndexArray = (size: number) => {
+export const generateIterator = (size: number) => {
   return Array.from(Array(size).keys());
 };
 

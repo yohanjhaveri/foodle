@@ -1,8 +1,14 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useToast } from "@chakra-ui/react";
 import { LETTERS_ARRAY, ALLOWED_ATTEMPTS, WORD_SIZE } from "../constants";
 import { getTodayWord } from "../utils";
-import { validWordSet } from "../data";
+import { validWordSet } from "../constants";
 import { State } from "../types";
 
 type Context = {
@@ -25,8 +31,8 @@ export const GameContext = createContext({} as Context);
 
 export const GameProvider = ({ children }: Props) => {
   const toast = useToast();
+  const word = getTodayWord();
 
-  const [word] = useState(getTodayWord());
   const [guess, setGuess] = useState(DEFAULT_GUESS);
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
   const [state, setState] = useState<State>(DEFAULT_STATE);
@@ -152,3 +158,5 @@ export const GameProvider = ({ children }: Props) => {
     </GameContext.Provider>
   );
 };
+
+export const useGame = () => useContext(GameContext);

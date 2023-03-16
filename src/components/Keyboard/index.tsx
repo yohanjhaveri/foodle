@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { useGame } from "../../hooks/useGame";
+import { useGame } from "../../context/GameContext";
 import { getKeyColors } from "../../utils";
 import { Key } from "./Key";
 
