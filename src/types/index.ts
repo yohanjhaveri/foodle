@@ -9,6 +9,5 @@ export type KeyColors = {
 export type Stats = {
   date: string;
   word: string;
-  guess: string;
   turns: string[];
 }[];

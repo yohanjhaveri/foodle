@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Box, Flex, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import {
   VALID_WORD_SET,
   LETTERS_ARRAY,
@@ -16,12 +16,14 @@ import {
 } from "../constants";
 import { ModalName, State, Stats } from "../types";
 import { getToday } from "../utils";
+import { GameToast } from "../components/Toasts/GameToast";
 
 type ContextData = {
   guess: string;
   turns: string[];
   state: State;
   jiggle: boolean;
+  reveal: boolean;
   modal: ModalName | "";
   setModal: (modal: ModalName | "") => void;
 };
@@ -42,6 +44,7 @@ export const Provider = ({ children }: Props) => {
   const [guess, setGuess] = useState(DEFAULT_GUESS);
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
   const [jiggle, setJiggle] = useState(false);
+  const [reveal, setReveal] = useState(true);
 
   const state = useMemo(() => {
     if (turns[turns.length - 1] === WORD) {
@@ -55,32 +58,66 @@ export const Provider = ({ children }: Props) => {
     return "PENDING";
   }, [turns]);
 
-  console.log(state);
-
-  const appendLetter = useCallback((letter: string) => {
-    setGuess((prev) => (prev + letter).substring(0, WORD_SIZE));
-  }, []);
+  const appendLetter = useCallback(
+    (letter: string) => {
+      if (!reveal) {
+        setGuess((prev) => (prev + letter).substring(0, WORD_SIZE));
+      }
+    },
+    [reveal]
+  );
 
   const deleteLetter = useCallback(() => {
-    setGuess((prev) => prev.substring(0, prev.length - 1));
-  }, []);
+    if (!reveal) {
+      setGuess((prev) => prev.substring(0, prev.length - 1));
+    }
+  }, [reveal]);
 
   const submitGuess = useCallback(() => {
-    if (guess.length === WORD_SIZE) {
-      if (VALID_WORD_SET.has(guess)) {
-        setGuess("");
-        setTurns((prev) => prev.concat(guess));
-      } else {
-        setJiggle(true);
-        toast({
-          title: "Sorry, that's not on our menu",
-          position: "top",
-          status: "info",
-          duration: 3000,
-        });
-      }
+    if (reveal) {
+      return;
     }
-  }, [turns, guess, toast]);
+
+    if (guess.length < WORD_SIZE) {
+      toast({
+        position: "top",
+        duration: 3000,
+        render: () => <GameToast>Not enough letters</GameToast>,
+      });
+
+      setJiggle(true);
+
+      setTimeout(() => {
+        setJiggle(false);
+      }, 300);
+
+      return;
+    }
+
+    if (!VALID_WORD_SET.has(guess)) {
+      toast({
+        position: "top",
+        duration: 3000,
+        render: () => <GameToast>Sorry, that's not on our menu</GameToast>,
+      });
+
+      setJiggle(true);
+
+      setTimeout(() => {
+        setJiggle(false);
+      }, 300);
+
+      return;
+    }
+
+    setGuess("");
+    setTurns((prev) => prev.concat(guess));
+    setReveal(true);
+
+    setTimeout(() => {
+      setReveal(false);
+    }, 2000);
+  }, [reveal, guess, toast]);
 
   const onKeyPress = useCallback(
     (e: KeyboardEvent) => {
@@ -118,94 +155,102 @@ export const Provider = ({ children }: Props) => {
     [state, deleteLetter]
   );
 
-  useEffect(() => {
-    if (jiggle) {
-      setTimeout(() => {
-        setJiggle(false);
-      }, 300);
-    }
-  }, [jiggle]);
-
   // restore
   useEffect(() => {
     const stats = localStorage.getItem("stats");
+
+    console.log(stats);
 
     if (stats) {
       const data = JSON.parse(stats) as Stats;
       const today = data.find((stat) => stat.date === getToday());
 
       if (today) {
-        setGuess(today.guess);
         setTurns(today.turns);
       }
     }
+
+    setTimeout(() => {
+      setReveal(false);
+    }, 2000);
   }, []);
 
   useEffect(() => {
     if (state === "WIN") {
-      toast({
-        id: "win-toast",
-        position: "top",
-        render: () => (
-          <Flex justify="center" pb="">
-            <Box
-              px="16px"
-              py="8px"
-              bg="yellow.200"
-              borderRadius="md"
-              fontSize="xl"
-            >
-              🎉 🎉 🎉
-            </Box>
-          </Flex>
-        ),
-        duration: 100000,
-      });
-
       setTimeout(() => {
-        setModal("STATS");
-      }, 3000);
+        toast({
+          id: "win-toast",
+          position: "top",
+          duration: 3000,
+          render: () => <GameToast>🎉 🎉 🎉</GameToast>,
+        });
+      }, 2500);
     }
 
     if (state === "LOSE") {
-      toast({
-        id: "lose-toast",
-        position: "top",
-        render: () => (
-          <Flex justify="center" pb="">
-            <Box
-              px="16px"
-              py="8px"
-              color="gray.700"
-              bg="yellow.200"
-              borderRadius="md"
-              fontSize="xl"
-              fontWeight="700"
-            >
-              {WORD}
-            </Box>
-          </Flex>
-        ),
-        duration: 100000,
-      });
-
       setTimeout(() => {
-        setModal("STATS");
-      }, 3000);
+        toast({
+          id: "lose-toast",
+          position: "top",
+          duration: 3000,
+          render: () => <GameToast>{WORD}</GameToast>,
+        });
+      }, 2500);
     }
 
     if (["WIN", "LOSE"].includes(state)) {
       setTimeout(() => {
         setModal("STATS");
-      }, 3000);
+      }, 5000);
     }
   }, [state, toast]);
 
   // cache
   useEffect(() => {
-    const data = JSON.stringify({ word: WORD, guess, state, turns });
-    localStorage.setItem("cache", data);
-  }, [guess, state, turns]);
+    const stats = localStorage.getItem("stats");
+
+    let data: Stats;
+
+    if (stats) {
+      data = JSON.parse(stats);
+    } else {
+      data = [];
+    }
+
+    if (data) {
+      const today = data.find((stat) => stat.date === getToday());
+
+      if (!today) {
+        const updated = data.concat({
+          date: getToday(),
+          word: WORD,
+          turns,
+        });
+
+        const text = JSON.stringify(updated);
+
+        console.log(text);
+
+        localStorage.setItem("stats", text);
+      } else {
+        const updated = data.map((stat) => {
+          if (stat.date === getToday()) {
+            return {
+              ...stat,
+              turns,
+            };
+          }
+
+          return stat;
+        });
+
+        const text = JSON.stringify(updated);
+        console.log(text);
+
+        localStorage.setItem("stats", text);
+      }
+    }
+  }, [turns]);
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
@@ -218,7 +263,9 @@ export const Provider = ({ children }: Props) => {
   }, [onKeyDown, onKeyPress]);
 
   return (
-    <Context.Provider value={{ guess, turns, state, jiggle, modal, setModal }}>
+    <Context.Provider
+      value={{ guess, turns, state, jiggle, reveal, modal, setModal }}
+    >
       {children}
     </Context.Provider>
   );

@@ -1,13 +1,20 @@
 import { Flex } from "@chakra-ui/react";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useGlobal } from "../../context";
+import { KeyColors } from "../../types";
 import { getKeyColors } from "../../utils";
 import { Key } from "./Key";
 
 export const Keyboard = () => {
   const { turns } = useGlobal();
 
-  const keyColors = useMemo(() => getKeyColors(turns), [turns]);
+  const [keyColors, setKeyColors] = useState({} as KeyColors);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setKeyColors(getKeyColors(turns));
+    }, 2160);
+  }, [turns]);
 
   const handleKeyPress = (key: string) => {
     document.dispatchEvent(new KeyboardEvent("keypress", { key }));

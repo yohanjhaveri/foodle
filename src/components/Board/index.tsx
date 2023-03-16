@@ -3,7 +3,7 @@ import { generateIterator } from "../../utils";
 import { ALLOWED_ATTEMPTS } from "../../constants";
 import { Row } from "./Row";
 
-export const Game = () => {
+export const Board = () => {
   const rows = generateIterator(ALLOWED_ATTEMPTS);
 
   return (

@@ -26,13 +26,13 @@ export const getLetters = (
   guess: string,
   turns: string[]
 ) => {
-  if (type === "empty") {
-    return "";
+  if (type === "filled") {
+    return turns[index];
   }
 
   if (type === "active") {
     return guess;
   }
 
-  return turns[index];
+  return "";
 };
