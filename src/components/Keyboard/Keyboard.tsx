@@ -12,8 +12,6 @@ export const Keyboard = () => {
     [size, word, turns]
   );
 
-  console.log(keyColors);
-
   const handleKeyPress = (key: string) => {
     document.dispatchEvent(
       new KeyboardEvent("keypress", { key: key.toUpperCase() })

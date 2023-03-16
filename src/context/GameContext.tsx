@@ -1,11 +1,9 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { LETTERS_ARRAY, ALLOWED_ATTEMPTS } from "../constants";
+import { dailyWordList, validWordSet } from "../data";
 import { Size, State } from "../types";
 import { getToday } from "../utils";
-
-import dailyWords from "../data/daily-words.json";
-import validWords from "../data/valid-words.json";
 
 type Context = {
   word: string;
@@ -20,9 +18,23 @@ type Props = {
   children: React.ReactNode;
 };
 
+const getTodayHash = () => {
+  const today = getToday();
+
+  let hash = 0;
+
+  for (let i = 0; i < today.length; i++) {
+    let chr = today.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0;
+  }
+
+  return Math.abs(hash) % dailyWordList.length;
+};
+
 const getTodayWord = () => {
-  const today = getToday() as keyof typeof dailyWords;
-  return dailyWords[today];
+  const todayHash = getTodayHash();
+  return dailyWordList[todayHash];
 };
 
 const DEFAULT_STATE = "PENDING";
@@ -55,7 +67,7 @@ export const GameProvider = ({ children }: Props) => {
 
   const submitGuess = useCallback(() => {
     if (guess.length === size) {
-      if (validWords.includes(guess)) {
+      if (validWordSet.has(guess)) {
         setGuess("");
 
         if (guess === word) {

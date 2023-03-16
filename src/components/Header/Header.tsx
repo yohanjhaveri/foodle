@@ -4,7 +4,7 @@ import { FaChartBar, FaCog, FaRegQuestionCircle } from "react-icons/fa";
 import { ModalName } from "../../types";
 import { HeaderIcon } from "./HeaderIcon";
 
-import FoodleLogo from "../../foodle-logo.png";
+import FoodleLogo from "../../images/foodle-logo.png";
 
 type Props = {
   handleOpenModal: (modal: ModalName) => void;
