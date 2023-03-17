@@ -80,8 +80,9 @@ export const Provider = ({ children }: Props) => {
 
     if (guess.length < WORD_SIZE) {
       toast({
+        id: "not-enough-letters",
         position: "top",
-        duration: 3000,
+        duration: 1000,
         render: () => <GameToast>Not enough letters</GameToast>,
       });
 
@@ -96,8 +97,9 @@ export const Provider = ({ children }: Props) => {
 
     if (!VALID_WORD_SET.has(guess)) {
       toast({
+        id: "not-on-menu",
         position: "top",
-        duration: 3000,
+        duration: 1000,
         render: () => <GameToast>Sorry, that's not on our menu</GameToast>,
       });
 
