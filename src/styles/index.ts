@@ -43,23 +43,9 @@ const flip = keyframes`
   }
 `;
 
-const pop = keyframes`
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  40% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-`;
-
 export const animations = {
   JIGGLE: css`
     ${jiggle} 300ms
-  `,
-  POP: css`
-    ${pop} 100ms
   `,
   FLIP: css`
     ${flip} 500ms ease-in
