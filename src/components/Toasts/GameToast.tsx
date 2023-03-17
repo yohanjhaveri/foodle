@@ -7,12 +7,12 @@ export type GameToastProps = {
 export const GameToast = ({ children }: GameToastProps) => (
   <Flex justify="center" pt="60px">
     <Box
-      px="16px"
-      py="8px"
+      px="12px"
+      py="6px"
       color="gray.700"
       bg="yellow.200"
       borderRadius="md"
-      fontSize="xl"
+      fontSize="lg"
       fontWeight="700"
     >
       {children}

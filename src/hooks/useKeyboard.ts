@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 
 export const useKeyboard = (callback: (key: string) => void) => {
+  // if we only have this, then hitting refresh using CMD + R types "R" into the box
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       const key = e.key.toUpperCase();
@@ -12,6 +13,7 @@ export const useKeyboard = (callback: (key: string) => void) => {
     [callback]
   );
 
+  // if we only have this, then hitting backspace does not work
   const onKeyPress = useCallback(
     (e: KeyboardEvent) => {
       const key = e.key.toUpperCase();

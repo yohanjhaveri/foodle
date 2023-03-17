@@ -1,8 +1,8 @@
-import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../context";
-import { KeyColors } from "../../types";
+import { Flex } from "@chakra-ui/react";
 import { getKeyColors } from "../../utils";
+import { KeyColors } from "../../types";
 import { Key } from "./Key";
 
 export const Keyboard = () => {
@@ -17,7 +17,7 @@ export const Keyboard = () => {
           const keyColors = getKeyColors(turns);
           setKeyColors(keyColors);
         },
-        revealAll ? 880 : 1500
+        revealAll ? 0 : 2000
       );
     }
   }, [turns, revealAll]);

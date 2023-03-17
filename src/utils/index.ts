@@ -1,4 +1,3 @@
-import { TODAY } from "./../constants/index";
 import {
   DAILY_WORD_LIST,
   LOCAL_STORAGE_KEY,
@@ -122,4 +121,58 @@ export const setTodayCache = (data: DayCache) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, text);
 };
 
-export const calculateStatistics = () => {};
+const daysDifference = (date1: string, date2: string) => {
+  const dateObject1 = new Date(date1);
+  const dateObject2 = new Date(date2);
+
+  const diff = Math.abs(dateObject1.getTime() - dateObject2.getTime());
+
+  return Math.ceil(diff / (1000 * 3600 * 24));
+};
+
+export const calculateStats = () => {
+  const cache = getCache();
+
+  let numWon = 0;
+  let numLost = 0;
+  let currentStreak = 0;
+  let longestStreak = 0;
+
+  const distribution = [0, 0, 0, 0, 0, 0];
+
+  let prevDate = "";
+
+  for (const day of cache) {
+    if (day.turns.includes(day.word)) {
+      numWon += 1;
+      distribution[day.turns.length - 1] += 1;
+      continue;
+    }
+
+    if (day.turns.length === 6) {
+      numLost += 1;
+      continue;
+    }
+
+    if (!prevDate || daysDifference(day.date, prevDate) <= 1) {
+      currentStreak += 1;
+      prevDate = day.date;
+    } else {
+      longestStreak = Math.max(longestStreak, currentStreak);
+      currentStreak = 0;
+    }
+  }
+
+  longestStreak = Math.max(longestStreak, currentStreak);
+
+  const numPlayed = numWon + numLost;
+  const winPercent = Math.round((numWon / numPlayed) * 100) || 0;
+
+  return {
+    numPlayed,
+    winPercent,
+    currentStreak,
+    longestStreak,
+    distribution,
+  };
+};

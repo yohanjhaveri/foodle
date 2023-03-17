@@ -9,7 +9,7 @@ type IconProps = {
 
 export const Icon = ({ icon, ariaLabel, tabIndex, onClick }: IconProps) => (
   <IconButton
-    color="gray.400"
+    color="gray.600"
     background="transparent"
     fontSize="20px"
     icon={icon}

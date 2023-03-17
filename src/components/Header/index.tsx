@@ -1,6 +1,6 @@
 import { useGlobal } from "../../context";
 import { Flex, Image } from "@chakra-ui/react";
-import { FaChartBar, FaRegQuestionCircle } from "react-icons/fa";
+import { FaQuestionCircle, FaRegChartBar } from "react-icons/fa";
 import { GameModal } from "../Modals/GameModal";
 import { Icon } from "./Icon";
 
@@ -11,9 +11,9 @@ export const Header = () => {
 
   const LEFT = (
     <Icon
-      icon={<FaRegQuestionCircle />}
-      ariaLabel="about"
-      onClick={() => setModal("ABOUT")}
+      icon={<FaRegChartBar />}
+      ariaLabel="stats"
+      onClick={() => setModal("STATS")}
     />
   );
 
@@ -21,9 +21,9 @@ export const Header = () => {
 
   const RIGHT = (
     <Icon
-      icon={<FaChartBar />}
-      ariaLabel="stats"
-      onClick={() => setModal("STATS")}
+      icon={<FaQuestionCircle />}
+      ariaLabel="about"
+      onClick={() => setModal("ABOUT")}
     />
   );
 
@@ -35,7 +35,7 @@ export const Header = () => {
       borderBottomWidth="1px"
       borderBottomStyle="solid"
       borderBottomColor="gray.700"
-      background="gray.800"
+      background="gray.900"
       justify="space-between"
       align="center"
       px="10px"

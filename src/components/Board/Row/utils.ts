@@ -22,16 +22,16 @@ export const getColors = (index: number, turns: string[]) => {
 
 export const getLetters = (
   index: number,
-  type: "empty" | "active" | "filled",
+  type: "filled" | "active" | "empty",
   guess: string,
   turns: string[]
 ) => {
-  if (type === "filled") {
-    return turns[index];
-  }
-
   if (type === "active") {
     return guess;
+  }
+
+  if (type === "filled") {
+    return turns[index];
   }
 
   return "";

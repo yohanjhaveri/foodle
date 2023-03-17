@@ -16,7 +16,7 @@ export const Row = ({ index }: RowProps) => {
 
   const shouldAnimate = type === "active" && jiggle;
 
-  const shouldBeRevealed = (i: number) =>
+  const shouldReveal = (i: number) =>
     !reveal ||
     (reveal && index < turns.length - 1) ||
     (reveal && i <= revealIndex);
@@ -33,7 +33,7 @@ export const Row = ({ index }: RowProps) => {
             key={i}
             color={colors[i]}
             letter={letters[i]}
-            reveal={shouldBeRevealed(i)}
+            reveal={shouldReveal(i)}
             flip={i === revealIndex}
           />
         ))}

@@ -4,7 +4,6 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
 import { AboutModal } from "./AboutModal";
@@ -17,21 +16,15 @@ export type GameModalProps = {
 };
 
 export const GameModal = ({ modal, setModal }: GameModalProps) => {
-  const heading = {
-    STATS: "STATISTICS",
-    ABOUT: "HOW TO PLAY",
-  }[modal];
-
   const MODAL = {
     STATS: <StatsModal />,
     ABOUT: <AboutModal />,
   }[modal];
 
   return (
-    <Modal size="xs" isOpen={true} onClose={() => setModal("")}>
+    <Modal isOpen={true} onClose={() => setModal("")}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{heading}</ModalHeader>
+      <ModalContent width={{ base: "350px", md: "500px" }} bg="gray.900">
         <ModalCloseButton />
         <ModalBody>{MODAL}</ModalBody>
         <ModalFooter></ModalFooter>

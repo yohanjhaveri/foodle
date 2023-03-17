@@ -16,10 +16,11 @@ import {
   WORD_SIZE,
   WORD,
   TODAY,
+  LOCAL_STORAGE_KEY,
 } from "../constants";
-import { ModalName, State } from "../types";
 import { getTodayCache, setTodayCache } from "../utils";
 import { GameToast } from "../components/Toasts/GameToast";
+import { ModalName, State } from "../types";
 
 type ContextData = {
   guess: string;
@@ -101,21 +102,44 @@ export const Provider = ({ children }: Props) => {
   }, [guess, error, toast, triggerJiggle, triggerReveal]);
 
   useEffect(() => {
-    const message = state === "WIN" ? "🎉 🎉 🎉" : WORD;
+    const isFirstTimeUser = !localStorage.getItem(LOCAL_STORAGE_KEY);
+
+    if (isFirstTimeUser) {
+      setModal("ABOUT");
+    }
+  }, []);
+
+  useEffect(() => {
+    const winMessages = [
+      "Genius",
+      "Magnificent",
+      "Impressive",
+      "Splendid",
+      "Great",
+      "Phew",
+    ];
+
+    const message = state === "WIN" ? winMessages[turns.length - 1] : WORD;
 
     if (["WIN", "LOSE"].includes(state)) {
-      setTimeout(() => {
-        toast({
-          id: state,
-          position: "top",
-          duration: 1500,
-          render: () => <GameToast>{message}</GameToast>,
-        });
-      }, 1000);
+      setTimeout(
+        () => {
+          toast({
+            id: state,
+            position: "top",
+            duration: 1500,
+            render: () => <GameToast>{message}</GameToast>,
+          });
+        },
+        revealAll ? 0 : 2400
+      );
 
-      setTimeout(() => {
-        setModal("STATS");
-      }, 3000);
+      setTimeout(
+        () => {
+          setModal("STATS");
+        },
+        revealAll ? 2000 : 4500
+      );
     }
   }, [state, toast]);
 

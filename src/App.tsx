@@ -19,7 +19,7 @@ const theme = extendTheme({
         padding: 0,
         height: "100%",
         color: "white",
-        background: "gray.800",
+        background: "gray.900",
       },
     },
   },

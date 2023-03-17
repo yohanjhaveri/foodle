@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useInterval } from "../../../hooks/useInterval";
-import { WORD_SIZE } from "../../../constants";
 import { useGlobal } from "../../../context";
+import { WORD_SIZE } from "../../../constants";
 import { getColors, getLetters, getType } from "./utils";
 
 export const useRow = (index: number) => {
@@ -11,22 +11,33 @@ export const useRow = (index: number) => {
   const colors = getColors(index, turns);
   const letters = getLetters(index, type, guess, turns);
 
+  const firstReveal = revealAll && type === "filled";
+
   const [revealIndex, trigger, reset] = useInterval({
     repeats: WORD_SIZE,
-    duration: revealAll && type === "filled" ? 100 : 400,
+    duration: firstReveal ? 100 : 400,
   });
 
-  useEffect(() => {
-    if ((revealAll && type === "filled") || index === turns.length - 1) {
-      trigger();
-    }
-  }, [index, turns]);
+  const startReveal = index === turns.length - 1;
+  const endReveal = revealIndex === WORD_SIZE;
 
   useEffect(() => {
-    if (revealIndex === WORD_SIZE) {
+    if (firstReveal) {
+      trigger();
+    }
+  }, [firstReveal]);
+
+  useEffect(() => {
+    if (startReveal) {
+      trigger();
+    }
+  }, [startReveal]);
+
+  useEffect(() => {
+    if (endReveal) {
       reset();
     }
-  }, [turns, revealIndex]);
+  }, [endReveal]);
 
   return {
     type,
