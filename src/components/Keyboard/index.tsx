@@ -1,23 +1,26 @@
 import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../context";
+import { KeyColors } from "../../types";
 import { getKeyColors } from "../../utils";
 import { Key } from "./Key";
 
 export const Keyboard = () => {
-  const { turns } = useGlobal();
+  const { turns, revealAll } = useGlobal();
 
-  const [keyColors, setKeyColors] = useState(getKeyColors(turns));
-
-  const [x] = useState(Math.random());
-
-  console.log(x, keyColors);
+  const [keyColors, setKeyColors] = useState({} as KeyColors);
 
   useEffect(() => {
-    setTimeout(() => {
-      setKeyColors(getKeyColors(turns));
-    }, 1000);
-  }, [turns]);
+    if (turns.length !== 0) {
+      setTimeout(
+        () => {
+          const keyColors = getKeyColors(turns);
+          setKeyColors(keyColors);
+        },
+        revealAll ? 880 : 1500
+      );
+    }
+  }, [turns, revealAll]);
 
   const handleKeyPress = (key: string) => {
     document.dispatchEvent(new KeyboardEvent("keypress", { key }));

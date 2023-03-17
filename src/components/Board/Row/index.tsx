@@ -3,7 +3,7 @@ import { generateIterator } from "../../../utils";
 import { animations } from "../../../styles";
 import { WORD_SIZE } from "../../../constants";
 import { Animator } from "../../Animator";
-import { Letter } from "../Letter";
+import { Box } from "../Box";
 import { useRow } from "./state";
 
 export type RowProps = {
@@ -22,10 +22,14 @@ export const Row = ({ index }: RowProps) => {
     (reveal && i <= revealIndex);
 
   return (
-    <Animator active={shouldAnimate} animation={animations.JIGGLE}>
+    <Animator
+      duration={300}
+      animation={animations.JIGGLE}
+      condition={shouldAnimate}
+    >
       <Flex gap="6px" justify="center">
         {generateIterator(WORD_SIZE).map((i) => (
-          <Letter
+          <Box
             key={i}
             color={colors[i]}
             letter={letters[i]}

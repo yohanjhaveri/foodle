@@ -6,8 +6,10 @@ export type KeyColors = {
   [key: string]: Color;
 };
 
-export type Stats = {
+export type DayCache = {
   date: string;
   word: string;
   turns: string[];
-}[];
+};
+
+export type AllCache = DayCache[];

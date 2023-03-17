@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { getColorValue } from "../../../utils";
+import { colors } from "../../../styles";
 import { Color } from "../../../types";
 
 type KeyProps = {
@@ -30,7 +30,7 @@ export const Key = ({ color, label, value, onClick }: KeyProps) => {
       fontSize={long ? "16px" : fontSize}
       fontWeight="600"
       color="white"
-      background={color ? getColorValue(color) : "gray.600"}
+      background={color ? colors[color] : "gray.600"}
       borderRadius={borderRadius}
       onClick={() => onClick(value)}
     >

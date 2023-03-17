@@ -45,9 +45,9 @@ const flip = keyframes`
 
 export const animations = {
   JIGGLE: css`
-    ${jiggle} 300ms
+    ${jiggle}
   `,
   FLIP: css`
-    ${flip} 500ms ease-in
+    ${flip}
   `,
 };

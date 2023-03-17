@@ -1,4 +1,4 @@
-import { getHints } from "../../../utils";
+import { getBoxColors } from "../../../utils";
 
 export const getType = (index: number, turns: string[]) => {
   if (index < turns.length) {
@@ -14,7 +14,7 @@ export const getType = (index: number, turns: string[]) => {
 
 export const getColors = (index: number, turns: string[]) => {
   if (index < turns.length) {
-    return getHints(turns[index]);
+    return getBoxColors(turns[index]);
   }
 
   return [];
