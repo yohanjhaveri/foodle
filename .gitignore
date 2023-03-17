@@ -23,7 +23,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/src/data/valid-words.json
-/src/data/daily-words.json
 
 .firebase/*
