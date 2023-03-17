@@ -1,18 +1,14 @@
-import styled from "@emotion/styled";
 import { Flex } from "@chakra-ui/react";
-import { useRow } from "./state";
 import { generateIterator } from "../../../utils";
 import { animations } from "../../../styles";
 import { WORD_SIZE } from "../../../constants";
+import { Animator } from "../../Animator";
 import { Letter } from "../Letter";
+import { useRow } from "./state";
 
 export type RowProps = {
   index: number;
 };
-
-const JiggleAnimator = styled.div<{ active: boolean }>`
-  animation: ${(props) => (props.active ? animations.JIGGLE : "")};
-`;
 
 export const Row = ({ index }: RowProps) => {
   const { type, turns, colors, letters, jiggle, reveal, revealIndex } =
@@ -26,7 +22,7 @@ export const Row = ({ index }: RowProps) => {
     (reveal && i <= revealIndex);
 
   return (
-    <JiggleAnimator active={shouldAnimate}>
+    <Animator active={shouldAnimate} animation={animations.JIGGLE}>
       <Flex gap="6px" justify="center">
         {generateIterator(WORD_SIZE).map((i) => (
           <Letter
@@ -38,6 +34,6 @@ export const Row = ({ index }: RowProps) => {
           />
         ))}
       </Flex>
-    </JiggleAnimator>
+    </Animator>
   );
 };

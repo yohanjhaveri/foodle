@@ -31,17 +31,11 @@ const jiggle = keyframes`
   }
 `;
 
-const flipIn = keyframes`
+const flip = keyframes`
   0% {
     transform: rotateX(0);
   }
-  100% {
-    transform: rotateX(-90deg);
-  }
-`;
-
-const flipOut = keyframes`
-  0% {
+  50% {
     transform: rotateX(-90deg);
   }
   100% {
@@ -64,13 +58,10 @@ export const animations = {
   JIGGLE: css`
     ${jiggle} 300ms
   `,
-  FLIP_IN: css`
-    ${flipIn} 250ms ease-in
-  `,
-  FLIP_OUT: css`
-    ${flipOut} 250ms ease-in
-  `,
   POP: css`
     ${pop} 100ms
+  `,
+  FLIP: css`
+    ${flip} 500ms ease-in
   `,
 };

@@ -1,19 +1,22 @@
 import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../context";
-import { KeyColors } from "../../types";
 import { getKeyColors } from "../../utils";
 import { Key } from "./Key";
 
 export const Keyboard = () => {
   const { turns } = useGlobal();
 
-  const [keyColors, setKeyColors] = useState({} as KeyColors);
+  const [keyColors, setKeyColors] = useState(getKeyColors(turns));
+
+  const [x] = useState(Math.random());
+
+  console.log(x, keyColors);
 
   useEffect(() => {
     setTimeout(() => {
       setKeyColors(getKeyColors(turns));
-    }, 2160);
+    }, 1000);
   }, [turns]);
 
   const handleKeyPress = (key: string) => {
@@ -21,7 +24,7 @@ export const Keyboard = () => {
   };
 
   // only used for backspace
-  const handleKeyDown = (key: string) => {
+  const handleKeyDown = () => {
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "BACKSPACE" }));
   };
 

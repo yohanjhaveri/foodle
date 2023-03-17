@@ -1,8 +1,8 @@
-import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import { getColorValue } from "../../../utils";
 import { animations } from "../../../styles";
+import { Animator } from "../../Animator";
 import { Color } from "../../../types";
 
 type LetterProps = {
@@ -12,38 +12,17 @@ type LetterProps = {
   letter?: string;
 };
 
-const FlipAnimator = styled.div<{ state: "in" | "out" | "none" }>`
-  animation: ${(props) => {
-    switch (props.state) {
-      case "in":
-        return animations.FLIP_IN;
-      case "out":
-        return animations.FLIP_OUT;
-      default:
-        return "";
-    }
-  }};
-`;
-
-const PopAnimator = styled.div<{ active: boolean }>`
-  animation: ${(props) => (props.active ? animations.POP : "")};
-`;
-
 export const Letter = ({ flip, reveal, color, letter }: LetterProps) => {
   const [pop, setPop] = useState(false);
-  const [state, setState] = useState<"in" | "out" | "none">("none");
+  const [state, setState] = useState(false);
   const [value, setValue] = useState("RANDOM");
 
   useEffect(() => {
     if (flip) {
-      setState("in");
+      setState(true);
 
       setTimeout(() => {
-        setState("out");
-      }, 250);
-
-      setTimeout(() => {
-        setState("none");
+        setState(false);
       }, 500);
     }
   }, [flip]);
@@ -58,11 +37,11 @@ export const Letter = ({ flip, reveal, color, letter }: LetterProps) => {
     }
 
     setValue(letter || "");
-  }, [letter]);
+  }, [letter, reveal, value]);
 
   return (
-    <PopAnimator active={pop}>
-      <FlipAnimator state={state}>
+    <Animator active={pop} animation={animations.POP}>
+      <Animator active={state} animation={animations.FLIP}>
         <Flex
           w={{ base: "56px", md: "72px" }}
           h={{ base: "56px", md: "72px" }}
@@ -84,7 +63,7 @@ export const Letter = ({ flip, reveal, color, letter }: LetterProps) => {
         >
           {letter}
         </Flex>
-      </FlipAnimator>
-    </PopAnimator>
+      </Animator>
+    </Animator>
   );
 };

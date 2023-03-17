@@ -24,6 +24,7 @@ type ContextData = {
   state: State;
   jiggle: boolean;
   reveal: boolean;
+  revealAll: boolean;
   modal: ModalName | "";
   setModal: (modal: ModalName | "") => void;
 };
@@ -45,6 +46,7 @@ export const Provider = ({ children }: Props) => {
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
   const [jiggle, setJiggle] = useState(false);
   const [reveal, setReveal] = useState(false);
+  const [revealAll, setRevealAll] = useState(false);
 
   const state = useMemo(() => {
     if (turns[turns.length - 1] === WORD) {
@@ -60,21 +62,23 @@ export const Provider = ({ children }: Props) => {
 
   const appendLetter = useCallback(
     (letter: string) => {
-      if (!reveal) {
+      if (!reveal && !revealAll) {
         setGuess((prev) => (prev + letter).substring(0, WORD_SIZE));
       }
     },
-    [reveal]
+    [reveal, revealAll]
   );
 
+  console.log(revealAll);
+
   const deleteLetter = useCallback(() => {
-    if (!reveal) {
+    if (!reveal && !revealAll) {
       setGuess((prev) => prev.substring(0, prev.length - 1));
     }
-  }, [reveal]);
+  }, [reveal, revealAll]);
 
   const submitGuess = useCallback(() => {
-    if (reveal) {
+    if (reveal || revealAll) {
       return;
     }
 
@@ -167,15 +171,15 @@ export const Provider = ({ children }: Props) => {
 
       if (today) {
         setTurns(today.turns);
+
+        if (today.turns.length > 0) {
+          setRevealAll(true);
+
+          setTimeout(() => {
+            setRevealAll(false);
+          }, 1000);
+        }
       }
-    }
-
-    if (turns.length !== 0) {
-      setReveal(true);
-
-      setTimeout(() => {
-        setReveal(false);
-      }, 2000);
     }
   }, []);
 
@@ -188,7 +192,7 @@ export const Provider = ({ children }: Props) => {
           duration: 3000,
           render: () => <GameToast>🎉 🎉 🎉</GameToast>,
         });
-      }, 2500);
+      }, 2000);
     }
 
     if (state === "LOSE") {
@@ -199,13 +203,13 @@ export const Provider = ({ children }: Props) => {
           duration: 3000,
           render: () => <GameToast>{WORD}</GameToast>,
         });
-      }, 2500);
+      }, 2000);
     }
 
     if (["WIN", "LOSE"].includes(state)) {
       setTimeout(() => {
         setModal("STATS");
-      }, 5000);
+      }, 5500);
     }
   }, [state, toast]);
 
@@ -268,7 +272,16 @@ export const Provider = ({ children }: Props) => {
 
   return (
     <Context.Provider
-      value={{ guess, turns, state, jiggle, reveal, modal, setModal }}
+      value={{
+        guess,
+        turns,
+        state,
+        jiggle,
+        reveal,
+        revealAll,
+        modal,
+        setModal,
+      }}
     >
       {children}
     </Context.Provider>

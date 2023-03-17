@@ -4,7 +4,7 @@ import { useGlobal } from "../../../context";
 import { getColors, getLetters, getType } from "./utils";
 
 export const useRow = (index: number) => {
-  const { guess, turns, jiggle, reveal } = useGlobal();
+  const { guess, turns, jiggle, reveal, revealAll } = useGlobal();
   const [revealIndex, setRevealIndex] = useState(-1);
 
   const type = getType(index, turns);
@@ -12,11 +12,14 @@ export const useRow = (index: number) => {
   const letters = getLetters(index, type, guess, turns);
 
   useEffect(() => {
-    if (index === turns.length - 1) {
+    if ((revealAll && type === "filled") || index === turns.length - 1) {
       for (let i = 0; i < WORD_SIZE; i++) {
-        setTimeout(() => {
-          setRevealIndex(i);
-        }, i * 400);
+        setTimeout(
+          () => {
+            setRevealIndex(i);
+          },
+          revealAll && type === "filled" ? i * 100 : i * 400
+        );
       }
     }
   }, [index, turns]);
@@ -34,6 +37,7 @@ export const useRow = (index: number) => {
     letters,
     jiggle,
     reveal,
+    revealAll,
     revealIndex,
   };
 };
