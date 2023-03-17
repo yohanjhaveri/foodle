@@ -44,7 +44,7 @@ export const Provider = ({ children }: Props) => {
   const [guess, setGuess] = useState(DEFAULT_GUESS);
   const [turns, setTurns] = useState<string[]>(DEFAULT_TURNS);
   const [jiggle, setJiggle] = useState(false);
-  const [reveal, setReveal] = useState(true);
+  const [reveal, setReveal] = useState(false);
 
   const state = useMemo(() => {
     if (turns[turns.length - 1] === WORD) {
@@ -159,8 +159,6 @@ export const Provider = ({ children }: Props) => {
   useEffect(() => {
     const stats = localStorage.getItem("stats");
 
-    console.log(stats);
-
     if (stats) {
       const data = JSON.parse(stats) as Stats;
       const today = data.find((stat) => stat.date === getToday());
@@ -170,9 +168,13 @@ export const Provider = ({ children }: Props) => {
       }
     }
 
-    setTimeout(() => {
-      setReveal(false);
-    }, 2000);
+    if (turns.length !== 0) {
+      setReveal(true);
+
+      setTimeout(() => {
+        setReveal(false);
+      }, 2000);
+    }
   }, []);
 
   useEffect(() => {
