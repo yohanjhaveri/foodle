@@ -29,6 +29,7 @@ type ContextData = {
   jiggle: boolean;
   reveal: boolean;
   revealAll: boolean;
+  firstLoad: boolean;
   modal: ModalName | "";
   setModal: (modal: ModalName | "") => void;
 };
@@ -48,6 +49,7 @@ export const Provider = ({ children }: Props) => {
   const [jiggle, triggerJiggle] = useToggleDelay(300);
   const [reveal, triggerReveal] = useToggleDelay(2000);
   const [revealAll, triggerRevealAll] = useToggleDelay(1000);
+  const [firstLoad, triggerFirstLoad] = useToggleDelay(1000, true);
 
   const state = useMemo(() => {
     if (turns[turns.length - 1] === WORD) {
@@ -107,6 +109,8 @@ export const Provider = ({ children }: Props) => {
     if (isFirstTimeUser) {
       setModal("ABOUT");
     }
+
+    triggerFirstLoad();
   }, []);
 
   useEffect(() => {
@@ -138,7 +142,7 @@ export const Provider = ({ children }: Props) => {
         () => {
           setModal("STATS");
         },
-        revealAll ? 2000 : 4500
+        revealAll ? 2000 : 4000
       );
     }
   }, [state, toast]);
@@ -196,6 +200,7 @@ export const Provider = ({ children }: Props) => {
   return (
     <Context.Provider
       value={{
+        firstLoad,
         guess,
         turns,
         state,

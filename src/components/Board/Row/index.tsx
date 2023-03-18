@@ -11,10 +11,18 @@ export type RowProps = {
 };
 
 export const Row = ({ index }: RowProps) => {
-  const { type, turns, colors, letters, jiggle, reveal, revealIndex } =
-    useRow(index);
+  const {
+    type,
+    turns,
+    colors,
+    letters,
+    jiggle,
+    reveal,
+    revealIndex,
+    bounceIndex,
+  } = useRow(index);
 
-  const shouldAnimate = type === "active" && jiggle;
+  const shouldJiggle = type === "active" && jiggle;
 
   const shouldReveal = (i: number) =>
     !reveal ||
@@ -25,7 +33,7 @@ export const Row = ({ index }: RowProps) => {
     <Animator
       duration={300}
       animation={animations.JIGGLE}
-      condition={shouldAnimate}
+      condition={shouldJiggle}
     >
       <Flex gap="6px" justify="center">
         {generateIterator(WORD_SIZE).map((i) => (
@@ -35,6 +43,8 @@ export const Row = ({ index }: RowProps) => {
             letter={letters[i]}
             reveal={shouldReveal(i)}
             flip={i === revealIndex}
+            bounce={i === bounceIndex && index === turns.length - 1}
+            rowType={type}
           />
         ))}
       </Flex>

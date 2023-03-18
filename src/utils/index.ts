@@ -146,20 +146,30 @@ export const calculateStats = () => {
     if (day.turns.includes(day.word)) {
       numWon += 1;
       distribution[day.turns.length - 1] += 1;
+
+      if (!prevDate || daysDifference(day.date, prevDate) <= 1) {
+        currentStreak += 1;
+        prevDate = day.date;
+      } else {
+        longestStreak = Math.max(longestStreak, currentStreak);
+        currentStreak = 0;
+      }
+
       continue;
     }
 
     if (day.turns.length === 6) {
       numLost += 1;
-      continue;
-    }
 
-    if (!prevDate || daysDifference(day.date, prevDate) <= 1) {
-      currentStreak += 1;
-      prevDate = day.date;
-    } else {
-      longestStreak = Math.max(longestStreak, currentStreak);
-      currentStreak = 0;
+      if (!prevDate || daysDifference(day.date, prevDate) <= 1) {
+        currentStreak += 1;
+        prevDate = day.date;
+      } else {
+        longestStreak = Math.max(longestStreak, currentStreak);
+        currentStreak = 0;
+      }
+
+      continue;
     }
   }
 

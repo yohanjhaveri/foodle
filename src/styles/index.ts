@@ -43,11 +43,50 @@ const flip = keyframes`
   }
 `;
 
+const bounce = keyframes`
+  0%, 20% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-30px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+  80% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const pop = keyframes`
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+`;
+
 export const animations = {
   JIGGLE: css`
     ${jiggle}
   `,
   FLIP: css`
     ${flip}
+  `,
+  BOUNCE: css`
+    ${bounce}
+  `,
+  POP: css`
+    ${pop}
   `,
 };
