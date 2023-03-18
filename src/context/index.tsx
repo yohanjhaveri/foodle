@@ -135,7 +135,7 @@ export const Provider = ({ children }: Props) => {
             render: () => <GameToast>{message}</GameToast>,
           });
         },
-        revealAll ? 0 : 2400
+        revealAll ? 0 : 2000
       );
 
       setTimeout(
