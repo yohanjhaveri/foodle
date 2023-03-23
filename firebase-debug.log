@@ -1,0 +1,80 @@
+[debug] [2023-03-18T04:53:29.507Z] ----------------------------------------------------------------------
+[debug] [2023-03-18T04:53:29.507Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-03-18T04:53:29.508Z] CLI Version:   11.24.1
+[debug] [2023-03-18T04:53:29.508Z] Platform:      darwin
+[debug] [2023-03-18T04:53:29.508Z] Node Version:  v18.15.0
+[debug] [2023-03-18T04:53:29.511Z] Time:          Sat Mar 18 2023 00:53:29 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-03-18T04:53:29.511Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-18T04:53:29.542Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-18T04:53:29.542Z] > authorizing via signed-in user (yohanjhaveri@gmail.com)
+[debug] [2023-03-18T04:53:29.542Z] [iam] checking project foodle-game for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-03-18T04:53:29.543Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/foodle-game:testIamPermissions [none]
+[debug] [2023-03-18T04:53:29.543Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/foodle-game:testIamPermissions x-goog-quota-user=projects/foodle-game
+[debug] [2023-03-18T04:53:29.543Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/foodle-game:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-03-18T04:53:29.769Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/foodle-game:testIamPermissions 200
+[debug] [2023-03-18T04:53:29.770Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/foodle-game:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-03-18T04:53:29.770Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/foodle-game [none]
+[debug] [2023-03-18T04:53:30.068Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/foodle-game 200
+[debug] [2023-03-18T04:53:30.068Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/foodle-game {"projectId":"foodle-game","projectNumber":"970156122627","displayName":"foodle-game","name":"projects/foodle-game","resources":{"hostingSite":"foodle-game"},"state":"ACTIVE","etag":"1_8d979727-9f38-4b72-b564-c6e9e2fb2b5a"}
+[info] 
+[info] === Deploying to 'foodle-game'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2023-03-18T04:53:30.071Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/foodle-game/versions [none]
+[debug] [2023-03-18T04:53:30.071Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/foodle-game/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2023-03-18T04:53:30.770Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/foodle-game/versions 200
+[debug] [2023-03-18T04:53:30.771Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/foodle-game/versions {"name":"projects/970156122627/sites/foodle-game/versions/9bdbea5379c3b1ea","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[foodle-game]: beginning deploy... 
+[info] i  hosting[foodle-game]: found 9 files in build 
+[debug] [2023-03-18T04:53:30.781Z] [hosting] uploading with 200 concurrency
+[debug] [2023-03-18T04:53:31.021Z] [hosting] hash cache [YnVpbGQ] stored for 9 files
+[debug] [2023-03-18T04:53:31.021Z] [hosting][hash queue][FINAL] {"max":231,"min":5,"avg":39.77777777777778,"active":0,"complete":9,"success":9,"errored":0,"retried":0,"total":9,"elapsed":237}
+[debug] [2023-03-18T04:53:31.021Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/970156122627/sites/foodle-game/versions/9bdbea5379c3b1ea:populateFiles [none]
+[debug] [2023-03-18T04:53:31.021Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/970156122627/sites/foodle-game/versions/9bdbea5379c3b1ea:populateFiles {"files":{"/asset-manifest.json":"165a943c3a38ab6a39a959633bb39cb5dbc2ef735dc00fb9eb04dafc1d93e7d3","/favicon.png":"463996821cf46b262a0042a2f2b274ca408ea1adcd8dba426611d03dd52f5956","/index.html":"63ee0600b22ea3fa6bb59a900858fd646d391ad94826a3f5425127c16157e352","/static/js/main.1893110c.js.LICENSE.txt":"77b8122d12e5e4cd19bc92122a01f6edee6248d0d6eef5472e0c9fb11d6ed90f","/robots.txt":"391d14b3c2f8c9143a27a28c7399585142228d4d1bdbe2c87ac946de411fa9a2","/manifest.json":"e55dad29bad212428649807dae70093cd1151f6770f961caf2b3afe607d07d9d","/static/media/foodle-logo.4b2a43fac9df110516ce.png":"16d6fa8748869a89f6b219083e69ef256f166df1e982f894a6966d8674eb5004","/static/js/main.1893110c.js":"eeb8f2483ca35648d32175c283a3783c09585b17324c16738d2066edfad568f1","/static/js/main.1893110c.js.map":"f81089d25b6da77f3fdbf817195b7d1ad97153b9ab8105bfe76f15ef604cdc1f"}}
+[debug] [2023-03-18T04:53:31.484Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/970156122627/sites/foodle-game/versions/9bdbea5379c3b1ea:populateFiles 200
+[debug] [2023-03-18T04:53:31.484Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/970156122627/sites/foodle-game/versions/9bdbea5379c3b1ea:populateFiles {"uploadRequiredHashes":["165a943c3a38ab6a39a959633bb39cb5dbc2ef735dc00fb9eb04dafc1d93e7d3","eeb8f2483ca35648d32175c283a3783c09585b17324c16738d2066edfad568f1","63ee0600b22ea3fa6bb59a900858fd646d391ad94826a3f5425127c16157e352","f81089d25b6da77f3fdbf817195b7d1ad97153b9ab8105bfe76f15ef604cdc1f"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files"}
+[debug] [2023-03-18T04:53:31.485Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/165a943c3a38ab6a39a959633bb39cb5dbc2ef735dc00fb9eb04dafc1d93e7d3 [none]
+[debug] [2023-03-18T04:53:31.485Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/165a943c3a38ab6a39a959633bb39cb5dbc2ef735dc00fb9eb04dafc1d93e7d3 [stream]
+[debug] [2023-03-18T04:53:31.486Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/eeb8f2483ca35648d32175c283a3783c09585b17324c16738d2066edfad568f1 [none]
+[debug] [2023-03-18T04:53:31.486Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/eeb8f2483ca35648d32175c283a3783c09585b17324c16738d2066edfad568f1 [stream]
+[debug] [2023-03-18T04:53:31.486Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/63ee0600b22ea3fa6bb59a900858fd646d391ad94826a3f5425127c16157e352 [none]
+[debug] [2023-03-18T04:53:31.486Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/63ee0600b22ea3fa6bb59a900858fd646d391ad94826a3f5425127c16157e352 [stream]
+[debug] [2023-03-18T04:53:31.487Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/f81089d25b6da77f3fdbf817195b7d1ad97153b9ab8105bfe76f15ef604cdc1f [none]
+[debug] [2023-03-18T04:53:31.487Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/f81089d25b6da77f3fdbf817195b7d1ad97153b9ab8105bfe76f15ef604cdc1f [stream]
+[debug] [2023-03-18T04:53:31.487Z] [hosting][populate queue][FINAL] {"max":467,"min":467,"avg":467,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":469}
+[debug] [2023-03-18T04:53:31.487Z] [hosting] uploads queued: 4
+[debug] [2023-03-18T04:53:32.379Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/63ee0600b22ea3fa6bb59a900858fd646d391ad94826a3f5425127c16157e352 200
+[debug] [2023-03-18T04:53:32.380Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/63ee0600b22ea3fa6bb59a900858fd646d391ad94826a3f5425127c16157e352 [stream]
+[debug] [2023-03-18T04:53:32.387Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/165a943c3a38ab6a39a959633bb39cb5dbc2ef735dc00fb9eb04dafc1d93e7d3 200
+[debug] [2023-03-18T04:53:32.387Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/165a943c3a38ab6a39a959633bb39cb5dbc2ef735dc00fb9eb04dafc1d93e7d3 [stream]
+[debug] [2023-03-18T04:53:32.714Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/eeb8f2483ca35648d32175c283a3783c09585b17324c16738d2066edfad568f1 200
+[debug] [2023-03-18T04:53:32.715Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/eeb8f2483ca35648d32175c283a3783c09585b17324c16738d2066edfad568f1 [stream]
+[debug] [2023-03-18T04:53:32.924Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/f81089d25b6da77f3fdbf817195b7d1ad97153b9ab8105bfe76f15ef604cdc1f 200
+[debug] [2023-03-18T04:53:32.925Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/foodle-game/versions/9bdbea5379c3b1ea/files/f81089d25b6da77f3fdbf817195b7d1ad97153b9ab8105bfe76f15ef604cdc1f [stream]
+[debug] [2023-03-18T04:53:32.925Z] [hosting][upload queue][FINAL] {"max":1440,"min":896,"avg":1117.5,"active":0,"complete":4,"success":4,"errored":0,"retried":0,"total":4,"elapsed":1441}
+[info] ✔  hosting[foodle-game]: file upload complete 
+[debug] [2023-03-18T04:53:32.926Z] [hosting] deploy completed after 2153ms
+[debug] [2023-03-18T04:53:32.927Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "foodle-game"
+    },
+    "version": "projects/970156122627/sites/foodle-game/versions/9bdbea5379c3b1ea"
+  }
+]
+[info] i  hosting[foodle-game]: finalizing version... 
+[debug] [2023-03-18T04:53:32.931Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/foodle-game/versions/9bdbea5379c3b1ea updateMask=status%2Cconfig
+[debug] [2023-03-18T04:53:32.931Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/foodle-game/versions/9bdbea5379c3b1ea {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}

@@ -125,7 +125,7 @@ export const Provider = ({ children }: Props) => {
 
     const message = state === "WIN" ? winMessages[turns.length - 1] : WORD;
 
-    if (["WIN", "LOSE"].includes(state)) {
+    if (!firstLoad && ["WIN", "LOSE"].includes(state)) {
       setTimeout(
         () => {
           toast({
