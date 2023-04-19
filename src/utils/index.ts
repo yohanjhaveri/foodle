@@ -7,7 +7,13 @@ import {
 import { Color, KeyColors, AllCache, DayCache } from "../types";
 
 export const getToday = () => {
-  return new Date().toLocaleDateString();
+  const date = new Date();
+
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
 };
 
 const getHashIndex = (today: string) => {
