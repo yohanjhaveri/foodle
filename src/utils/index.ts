@@ -69,6 +69,10 @@ export const getKeyColors = (turns: string[]) => {
         continue;
       }
 
+      if (["GRAY"].includes(hints[i])) {
+        continue;
+      }
+
       colors[letter] = hints[i];
     }
   }
